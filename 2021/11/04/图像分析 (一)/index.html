@@ -22,7 +22,7 @@
 <meta property="og:image" content="e:/wormwood/blog/source/image/watermark,type_ZHJvaWRzYW5zZmFsbGJhY2s,shadow_50,text_Q1NETiBA5bqf54yr5LiA5p6a,size_20,color_FFFFFF,t_70,g_se,x_16#pic_center.png">
 <meta property="og:image" content="e:/wormwood/blog/source/image/6d520707694a4cbca9b71859910b686f-16360203008824.png">
 <meta property="article:published_time" content="2021-11-04T08:28:31.000Z">
-<meta property="article:modified_time" content="2021-11-05T12:36:04.867Z">
+<meta property="article:modified_time" content="2021-11-05T14:37:19.202Z">
 <meta property="article:author" content="WorMwood">
 <meta property="article:tag" content="图像处理,图像分割">
 <meta property="article:tag" content="医学影像处理，图像分割">
@@ -291,7 +291,12 @@
 <li><p>基于阈值的分割算法<br>基于阈值的分割算法常见的有直方图双峰法、固定阈值分割、迭代法阈值分割算法、OTSU分割算法、自适应阈值算法、最大熵法。<br>下面取几种进行简单介绍：</p>
 <ol>
 <li>灰度阈值分割<br>灰度阈值分割方法实际上是输入图像$f$到输出图像$g$的如下变换：<br>其中，$T$为阈值，对于物体的图像元素$g(i,j)$，对于背景的图像元素$g(i,j)=0$。 <script type="math/tex; mode=display">
-g(i,j) = \left\{\begin{aligned}& 1 &  f(i,j) \geqslant T <br/> & 0 &  f(i,j)>T  <br />\end{aligned}\right.</script></li>
+g(i,j)=\left\{
+           \begin{aligned}
+            & 1 &  f(i,j) \geqslant T \\\\\\
+            & 0 &  f(i,j)>T \\\\\\
+           \end{aligned}
+           \right.</script></li>
 </ol>
 </li>
 </ol>

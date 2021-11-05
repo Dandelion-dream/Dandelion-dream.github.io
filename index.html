@@ -685,7 +685,12 @@
 <li><p>基于阈值的分割算法<br>基于阈值的分割算法常见的有直方图双峰法、固定阈值分割、迭代法阈值分割算法、OTSU分割算法、自适应阈值算法、最大熵法。<br>下面取几种进行简单介绍：</p>
 <ol>
 <li>灰度阈值分割<br>灰度阈值分割方法实际上是输入图像$f$到输出图像$g$的如下变换：<br>其中，$T$为阈值，对于物体的图像元素$g(i,j)$，对于背景的图像元素$g(i,j)=0$。 <script type="math/tex; mode=display">
-g(i,j) = \left\{\begin{aligned}& 1 &  f(i,j) \geqslant T <br/> & 0 &  f(i,j)>T  <br />\end{aligned}\right.</script></li>
+g(i,j)=\left\{
+           \begin{aligned}
+            & 1 &  f(i,j) \geqslant T \\\\\\
+            & 0 &  f(i,j)>T \\\\\\
+           \end{aligned}
+           \right.</script></li>
 </ol>
 </li>
 </ol>
