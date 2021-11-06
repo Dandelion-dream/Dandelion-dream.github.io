@@ -233,6 +233,90 @@
             
 
   
+    <article id="post-图像分析 (一)" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+  <div class="article-entry" itemprop="articleBody">
+    
+    <hr>
+<hr>
+<h1 id="论文《几种图像分割算法在CT图像分割上的实现和比较》读书笔记-01"><a href="#论文《几种图像分割算法在CT图像分割上的实现和比较》读书笔记-01" class="headerlink" title="论文《几种图像分割算法在CT图像分割上的实现和比较》读书笔记-01"></a>论文《几种图像分割算法在CT图像分割上的实现和比较》读书笔记-01</h1><p>AuThor：杨 加， 吴祈耀， 田 捷， 杨 骅</p>
+<ol>
+<li>图像分割概念<br>图像分割就是把图像分成若干个特定的、具有独特性质的区域并提出感兴趣目标的技术和过程。它是由图像处理到图像分析的关键步骤。现有的图像分割方法主要分以下几类：基于阈值的分割方法、基于区域的分割方法、基于边缘的分割方法以及基于特定理论的分割方法等。从数学角度来看，图像分割是将数字图像划分成互不相交的区域的过程。图像分割的过程也是一个标记过程，即把属于同一区域的像素赋予相同的编号</li>
+<li>基于阈值的分割算法<br>基于阈值的分割算法常见的有直方图双峰法、固定阈值分割、迭代法阈值分割算法、OTSU分割算法、自适应阈值算法、最大熵法。<br>下面取几种进行简单介绍：<ol>
+<li>灰度阈值分割<br> 灰度阈值分割方法实际上是输入图像$f$到输出图像$g$的如下变换：<br> 其中，$T$为阈值，对于物体的图像元素$g(i,j)$，对于背景的图像元素$g(i,j)=0$。  $$<br> g(i,j)=\left { \begin{aligned}  1 &amp;  f(i,j) \geqslant T  \\ 0 &amp;  f(i,j)&gt;T  \\ \end{aligned}\right.<br> $$</li>
+</ol>
+</li>
+<li></li>
+</ol>
+<p>2.基于全局阈值法</p>
+<p><img src="/2021/11/06/%E5%9B%BE%E5%83%8F%E5%88%86%E6%9E%90%20(%E4%B8%80)/wormwood/blog/source/image/watermark,type_ZHJvaWRzYW5zZmFsbGJhY2s,shadow_50,text_Q1NETiBA5bqf54yr5LiA5p6a,size_20,color_FFFFFF,t_70,g_se,x_16%23pic_center.png" alt="在这里插入图片描述"></p>
+<p>​    3.基于迭代阈值分割算法</p>
+<p>![在这里插入图片描述](\图像分析 (一)\watermark,type_ZHJvaWRzYW5zZmFsbGJhY2s,shadow_50,text_Q1NETiBA5bqf54yr5LiA5p6a,size_19,color_FFFFFF,t_70,g_se,x_16#pic_center.png)</p>
+<ol start="4">
+<li>基于OTSU算法的阈值分割算法</li>
+</ol>
+<p>​    </p>
+<p>![在这里插入图片描述](\图像分析 (一)\watermark,type_ZHJvaWRzYW5zZmFsbGJhY2s,shadow_50,text_Q1NETiBA5bqf54yr5LiA5p6a,size_20,color_FFFFFF,t_70,g_se,x_16#pic_center.png)</p>
+<ol start="3">
+<li><p>交互式分割算法</p>
+</li>
+<li><p>基本理论与算法描述</p>
+<p> 动态规划算法最早应用于图像边缘跟踪，可以将图像边缘检测看作一个优化问题，并将其描述为找出一目标函数$V=V(x_1,x_2,x_3, \cdots,x_n)$的最优值$M$（如取最小值$min$）的$V$取最优值时的一组自变量值$(x_1,x_2, \cdots , x_n)$，若变量离散，目标函数无特定的规律的可循时，该问题存在一个极大的解空间，将目标函数描述成如下形式：<br> $$<br> V = V(x_1,x_2,\cdots ,x_n)=V_0(x_0,x_1)+V_1((x_1,x_2)+V_{n-1} (x_{n-1},x_n)<br> $$</p>
+<p> <strong>注：（个人理解）</strong><br> 该目标函数存在极大的解空间，目标函数可以分解成函数的线性组合，即由不同的线性函数和非线性函数，线性组合成为目标函数，所以对该目标函数的优化，分解成为多阶段目标优化的线性组合，然后由递推公式求解解的全局最优。</p>
+<p> $$f_0(x_0)= 0 ,f_{k+1}(k+1)  = {\underset {0 \leq x_k \leq n_k}{\operatorname {min}}[V_{k}(x_k,x_{k+1})+f_k(x_k)] }$$</p>
+<p> 式中  $k =1 ,2,3,\cdots ,n-1$;$f_{k+1}(x_{k+1})$ 是中间变量，显然当递推结束时有<br> $$M = {\underset{x_n}{\operatorname{ min}{f_n(x_n)}}}$$​<br> 获得目标函数的最优值后，可以通过反向递推获得最优变量，即<br> $$<br> x_n= arg（{\underset{  x_n}{\operatorname{ min}{f_n(x_n)}}}）<br> $$<br> 式中$arg$表示递推结束时，取参量操作，则$x_{k}= m_{k+1}(x_{k+1})~~~~ ~~~~ k =n-1,\cdots ,0$ 式中$m_{k+1}(x_{k+1})$表示在$x_{k+1}$确定后所获得的最优值$x_{k}$值  。<br> 基于动态规划的边缘检测，以图像中某一起始点到某一目标点的累积代价作为目标函数，像素边的代价值作为变量，最优值就是使目标点的累积代价值最小，动态规划用于边缘检测，同时利用局部信息和全局边缘累积代价信息，因而可以得到局部最优解。<br> 作者将图片定义成为一副二维图，图上个点像素信息用数值表示，将图像中目标物体边缘跟踪问题转换成二维图中最优路径搜索问题，根据动态规划方法的图搜索策略，实施显示出相应两点之间的最优路径，如果是最优路径匹配期望的物体边缘，则用户可确认此路径为物体的有效边缘段，并将目标点作为新的起始点做同样的最优路径搜索⒀用户只需在目标物体边缘上通过鼠标引导指定一系列的后续目标点，并以首先选择的初始点为最后的目标点便可获得连续、封闭的目标物体边缘。<br> <strong>注:个人思考</strong><br> 在实际图像分割中图片不一定都是灰度图，将$HSV,RGB$等多通道图片转换成为灰度图时候，会将原始信息损失掉，如果对原始图像直接进行图像分割，<br> 设$$<br> G = &lt;V,E&gt; \<br> V= &lt;R,G,B,&gt;\$$<br> 其中$V$为图像像素点集合，$E$为相邻像素关系集合，$R,G,B$为三通道像素值，则根据一定规则，目标物体的边缘特征即由一系列连续的像素边组成，对于每一条像素边采用一定的规则赋予其相应的特征值，用以描述像素边属于物体边缘的可能性，这种规则的选取可以分为有权值和无权值两种情况，思考是否可以将像素点像素与相邻像素点像素之间求导；相邻像素之间的权值用梯度表示，两个像素点之间的累积代价就可以利用权值关系进行迭代优化求解，（思考平均梯度和直接使用相邻位置梯度有什么优劣）。</p>
+</li>
+<li><p>由于医学图像存在大量的噪音，部分期望的目标物体边缘的特征往往较弱，而在目标物体边缘的周围存在强特征的噪音干扰，所以这里不采用文献［</p>
+</li>
+<li><p><img src="/2021/11/06/%E5%9B%BE%E5%83%8F%E5%88%86%E6%9E%90%20(%E4%B8%80)/wormwood/blog/source/image/6d520707694a4cbca9b71859910b686f-16360203008824-16361778167203.png" alt="在这里插入图片描述"><br>］中所提出的转换函数，而采用高斯函数的一种变体作为特征转换函数$$c＝1－exp［（f－μ)2／2σ2］$$</p>
+</li>
+</ol>
+
+    
+
+    
+
+    
+
+  </div>
+  <div class="article-info article-info-index">
+    
+    
+    
+
+    
+    <p class="article-more-link">
+      <a class="article-more-a" href="/2021/11/06/%E5%9B%BE%E5%83%8F%E5%88%86%E6%9E%90%20(%E4%B8%80)/">展开全文 >></a>
+    </p>
+    
+
+    
+    <div class="clearfix"></div>
+  </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
     <article id="post-Untitled" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -653,127 +737,6 @@
 
 
   
-    <article id="post-图像分析 (一)" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-  
-  
-    <h1 itemprop="name">
-	
-	  <a class="article-title" href="/2021/11/04/%E5%9B%BE%E5%83%8F%E5%88%86%E6%9E%90%20(%E4%B8%80)/" target="_blank">论文《几种图像分割算法在CT图像分割上的实现和比较》读书笔记-01</a>
-  
-    </h1>
-  
-
-
-  
-  
-<a href="/2021/11/04/%E5%9B%BE%E5%83%8F%E5%88%86%E6%9E%90%20(%E4%B8%80)/" class="archive-article-date">
-        <time datetime="2021-11-04T08:28:31.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-11-04</time>
-</a>
-
-  
-  
-    
-
-  
-  </header>
-  
-  <div class="article-entry" itemprop="articleBody">
-    
-    <h1 id="论文《几种图像分割算法在CT图像分割上的实现和比较》读书笔记-01"><a href="#论文《几种图像分割算法在CT图像分割上的实现和比较》读书笔记-01" class="headerlink" title="论文《几种图像分割算法在CT图像分割上的实现和比较》读书笔记-01"></a>论文《几种图像分割算法在CT图像分割上的实现和比较》读书笔记-01</h1><p>AuThor：杨 加， 吴祈耀， 田 捷， 杨 骅</p>
-<ol>
-<li>图像分割概念<br>图像分割就是把图像分成若干个特定的、具有独特性质的区域并提出感兴趣目标的技术和过程。它是由图像处理到图像分析的关键步骤。现有的图像分割方法主要分以下几类：基于阈值的分割方法、基于区域的分割方法、基于边缘的分割方法以及基于特定理论的分割方法等。从数学角度来看，图像分割是将数字图像划分成互不相交的区域的过程。图像分割的过程也是一个标记过程，即把属于同一区域的像素赋予相同的编号</li>
-<li>基于阈值的分割算法<br>基于阈值的分割算法常见的有直方图双峰法、固定阈值分割、迭代法阈值分割算法、OTSU分割算法、自适应阈值算法、最大熵法。<br>下面取几种进行简单介绍：<ol>
-<li>灰度阈值分割<br> 灰度阈值分割方法实际上是输入图像$f$到输出图像$g$的如下变换：<br> 其中，$T$为阈值，对于物体的图像元素$g(i,j)$，对于背景的图像元素$g(i,j)=0$。  $$<br> g(i,j)=\left { \begin{aligned}  1 &amp;  f(i,j) \geqslant T  \\ 0 &amp;  f(i,j)&gt;T  \\ \end{aligned}\right.<br> $$</li>
-</ol>
-</li>
-<li></li>
-</ol>
-<p>2.基于全局阈值法</p>
-<p><img src="E:\wormwood\blog\source\image\watermark,type_ZHJvaWRzYW5zZmFsbGJhY2s,shadow_50,text_Q1NETiBA5bqf54yr5LiA5p6a,size_20,color_FFFFFF,t_70,g_se,x_16#pic_center.png" alt="在这里插入图片描述"></p>
-<p>​    3.基于迭代阈值分割算法</p>
-<p><img src="E:\wormwood\blog\source\image\watermark,type_ZHJvaWRzYW5zZmFsbGJhY2s,shadow_50,text_Q1NETiBA5bqf54yr5LiA5p6a,size_19,color_FFFFFF,t_70,g_se,x_16#pic_center.png" alt="在这里插入图片描述"></p>
-<ol start="4">
-<li>基于OTSU算法的阈值分割算法</li>
-</ol>
-<p>​    </p>
-<p><img src="E:\wormwood\blog\source\image\watermark,type_ZHJvaWRzYW5zZmFsbGJhY2s,shadow_50,text_Q1NETiBA5bqf54yr5LiA5p6a,size_20,color_FFFFFF,t_70,g_se,x_16#pic_center.png" alt="在这里插入图片描述"></p>
-<ol start="3">
-<li><p>交互式分割算法</p>
-</li>
-<li><p>基本理论与算法描述</p>
-<p> 动态规划算法最早应用于图像边缘跟踪，可以将图像边缘检测看作一个优化问题，并将其描述为找出一目标函数$V=V(x_1,x_2,x_3, \cdots,x_n)$的最优值$M$（如取最小值$min$）的$V$取最优值时的一组自变量值$(x_1,x_2, \cdots , x_n)$，若变量离散，目标函数无特定的规律的可循时，该问题存在一个极大的解空间，将目标函数描述成如下形式：<br> $$<br> V = V(x_1,x_2,\cdots ,x_n)=V_0(x_0,x_1)+V_1((x_1,x_2)+V_{n-1} (x_{n-1},x_n)<br> $$</p>
-<p> <strong>注：（个人理解）</strong><br> 该目标函数存在极大的解空间，目标函数可以分解成函数的线性组合，即由不同的线性函数和非线性函数，线性组合成为目标函数，所以对该目标函数的优化，分解成为多阶段目标优化的线性组合，然后由递推公式求解解的全局最优。</p>
-<p> $$f_0(x_0)= 0 ,f_{k+1}(k+1)  = {\underset {0 \leq x_k \leq n_k}{\operatorname {min}}[V_{k}(x_k,x_{k+1})+f_k(x_k)] }$$</p>
-<p> 式中  $k =1 ,2,3,\cdots ,n-1$;$f_{k+1}(x_{k+1})$ 是中间变量，显然当递推结束时有<br> $$M = {\underset{x_n}{\operatorname{ min}{f_n(x_n)}}}$$​<br> 获得目标函数的最优值后，可以通过反向递推获得最优变量，即<br> $$<br> x_n= arg（{\underset{  x_n}{\operatorname{ min}{f_n(x_n)}}}）<br> $$<br> 式中$arg$表示递推结束时，取参量操作，则$x_{k}= m_{k+1}(x_{k+1})~~~~ ~~~~ k =n-1,\cdots ,0$ 式中$m_{k+1}(x_{k+1})$表示在$x_{k+1}$确定后所获得的最优值$x_{k}$值  。<br> 基于动态规划的边缘检测，以图像中某一起始点到某一目标点的累积代价作为目标函数，像素边的代价值作为变量，最优值就是使目标点的累积代价值最小，动态规划用于边缘检测，同时利用局部信息和全局边缘累积代价信息，因而可以得到局部最优解。<br> 作者将图片定义成为一副二维图，图上个点像素信息用数值表示，将图像中目标物体边缘跟踪问题转换成二维图中最优路径搜索问题，根据动态规划方法的图搜索策略，实施显示出相应两点之间的最优路径，如果是最优路径匹配期望的物体边缘，则用户可确认此路径为物体的有效边缘段，并将目标点作为新的起始点做同样的最优路径搜索⒀用户只需在目标物体边缘上通过鼠标引导指定一系列的后续目标点，并以首先选择的初始点为最后的目标点便可获得连续、封闭的目标物体边缘。<br> <strong>注:个人思考</strong><br> 在实际图像分割中图片不一定都是灰度图，将$HSV,RGB$等多通道图片转换成为灰度图时候，会将原始信息损失掉，如果对原始图像直接进行图像分割，<br> 设$$<br> G = &lt;V,E&gt; \<br> V= &lt;R,G,B,&gt;\$$<br> 其中$V$为图像像素点集合，$E$为相邻像素关系集合，$R,G,B$为三通道像素值，则根据一定规则，目标物体的边缘特征即由一系列连续的像素边组成，对于每一条像素边采用一定的规则赋予其相应的特征值，用以描述像素边属于物体边缘的可能性，这种规则的选取可以分为有权值和无权值两种情况，思考是否可以将像素点像素与相邻像素点像素之间求导；相邻像素之间的权值用梯度表示，两个像素点之间的累积代价就可以利用权值关系进行迭代优化求解，（思考平均梯度和直接使用相邻位置梯度有什么优劣）。</p>
-</li>
-<li><p>由于医学图像存在大量的噪音，部分期望的目标物体边缘的特征往往较弱，而在目标物体边缘的周围存在强特征的噪音干扰，所以这里不采用文献［</p>
-</li>
-<li><p><img src="E:\wormwood\blog\source\image\6d520707694a4cbca9b71859910b686f-16360203008824.png" alt="在这里插入图片描述"><br>］中所提出的转换函数，而采用高斯函数的一种变体作为特征转换函数$$c＝1－exp［（f－μ)2／2σ2］$$</p>
-</li>
-</ol>
-
-    
-
-    
-
-    
-
-  </div>
-  <div class="article-info article-info-index">
-    
-    
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">图像处理,图像分割</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">医学影像处理，图像分割</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-    
-
-    
-    <p class="article-more-link">
-      <a class="article-more-a" href="/2021/11/04/%E5%9B%BE%E5%83%8F%E5%88%86%E6%9E%90%20(%E4%B8%80)/">展开全文 >></a>
-    </p>
-    
-
-    
-    <div class="clearfix"></div>
-  </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
     <article id="post-最优化算法总结与推广" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -1062,14 +1025,6 @@
             <input type="checkbox" q-on="click:toggleTag(e)" q-attr="checked:showTags">
           </label>
           <ul class="article-tag-list" q-show="showTags">
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">图像处理,图像分割</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">医学影像处理，图像分割</a>
-              </li>
             
             <div class="clearfix"></div>
           </ul>
